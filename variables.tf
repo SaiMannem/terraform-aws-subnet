@@ -25,5 +25,4 @@ variable "subnet_config" {
       cidr_block        = "10.0.0.2/24"
     }
   }
-
 }
