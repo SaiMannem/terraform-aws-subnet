@@ -3,43 +3,29 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "common_tags" {
-  type = object({
-    managedBy   = string
-    owner       = string
-    environment = string
-  })
+#When creating multiple resources in Terraform from sintgle module, Especially when each resource has a separate name, separate configuratuion each.
+#Using map(object) is the perfect choice while module creation, because each object can carry its own name, which becomes your unique identity for for_each
 
-  default = {
-    managedBy   = "youDidNotSpecify"
-    owner       = "youDidNotSpecify"
-    environment = "youDidNotSpecify"
-  }
-}
-
-#when we are creating the multiple resources, the best way to define them as list of object
 variable "subnet_config" {
-  type = list(object({
-    name              = string
+  type = map(object({
     availability_zone = string
     cidr_block        = string
   }))
-
-  default = [
-    {
-      name              = "publicSubnet01"
+  default = {
+    "publicSubnet001" = {
       availability_zone = "ap-south-1a"
       cidr_block        = "10.0.0.0/24"
-    },
-    {
-      name              = "privateSubnet01"
-      availability_zone = "ap-south-1b"
-      cidr_block        = "10.0.1.0/24"
-    },
-    {
-      name              = "privateSubnet02"
-      availability_zone = "ap-south-1c"
-      cidr_block        = "10.0.2.0/24"
     }
-  ]
+
+    "privateSubnet001" = {
+      availability_zone = "ap-south-1b"
+      cidr_block        = "10.0.0.1/24"
+    }
+
+    "privateSubnet" = {
+      availability_zone = "ap-south-1c"
+      cidr_block        = "10.0.0.2/24"
+    }
+  }
+
 }
