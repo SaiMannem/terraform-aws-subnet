@@ -1,5 +1,5 @@
 variable "vpc_id" {
-  description = "Reference the VPC id from the VPC module"
+  description = "Reference the VPC id, from the VPC module"
   type        = string
 }
 
