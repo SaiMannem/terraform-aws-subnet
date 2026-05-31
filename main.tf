@@ -1,18 +1,10 @@
-locals {
-  common_tags = {
-    managedBy   = var.common_tags.managedBy
-    owner       = var.common_tags.owner
-    environment = var.common_tags.environment
-  }
-}
-
 resource "aws_subnet" "this" {
   for_each          = var.subnet_config
   vpc_id            = var.vpc_id
   cidr_block        = each.value.cidr_block
   availability_zone = each.value.availability_zone
 
-  tags = merge(local.common_tags, {
+  tags =  {
     Name = each.key
-  })
+  }
 }
